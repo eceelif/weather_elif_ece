@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather</title>
-    <script src="script.js"></script>
 
+    <script src="script.js"></script>
 </head>
 <body>
- <div id="app">
-
- 
- <input id="txtCity" type="text" placeholder="şehir ismi giriniz" />
- <input id="btn" type="button" value="gönder" onclick="btnClick(event)"></button>
-</div>
-</body>
+    <div id="app">
+      <input id="txtCity" type="text" placeholder="şehir ismi giriniz" />
+      <input id="btnGonder" type="button" value="gönder" onclick="btnClick(event)">
+      <input id="btnFavoriEkle" type="button" value="Favorilerime Ekle" onclick="btnClickFavoryCity(event)">
+      <ul id="favoriteCitiesList"></ul>
+    </div>
+  
+    
+  </body>
+  
 </html>
