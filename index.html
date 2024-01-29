@@ -4,18 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather</title>
-
     <script src="script.js"></script>
+    <script src="dataHelper.js"></script>
+     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    
 </head>
 <body>
     <div id="app">
-      <input id="txtCity" type="text" placeholder="şehir ismi giriniz" />
-      <input id="btnGonder" type="button" value="gönder" onclick="btnClick(event)">
-      <input id="btnFavoriEkle" type="button" value="Favorilerime Ekle" onclick="btnClickFavoryCity(event)">
-      <ul id="favoriteCitiesList"></ul>
+        <input id="txtCity" type="text" placeholder="şehir ismi giriniz"/>
+        <input id="btnSend" type="button" value="Gönder" onclick="btnClick(event)"/>
+        <div id="generatedData">
+            <div id="derece"></div>
+            <div id="lastUpdate"></div>
+            <img id="img" />
+            <div id="imgText"></div>
+        </div>
+        <input id="btnFavoriEkle" type="button" value="Favorilerime Ekle" onclick="btnClickFavoryCity(event)">
+        <ul id="favoriteCitiesList"></ul>
     </div>
-  
     
-  </body>
-  
+</body>
 </html>
