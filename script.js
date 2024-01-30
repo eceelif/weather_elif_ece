@@ -106,6 +106,7 @@ async function btnClick(event) {
   let city = domTxtCity.value;
   if (city === '') {
     alert(`Şehir ismi yazınız`);
+    return;
   }
 
     let result = await weather_api.dtoFunction.getFutureWeather(city, forecastLength);
@@ -115,6 +116,14 @@ async function btnClick(event) {
     generateCityDom(result_current);
     console.log(result_current);
 
+
+    //Giriş alanını temizle
+    result.value = " ";
+    result_current=" ";
+
+ // Çerez ayarı
+ util.cookie.deleteCookie('result');
+ util.cookie.deleteCookie('result_current');
 
     //console.log(result);
     /*let json_weather_data = response_data;
@@ -126,8 +135,9 @@ async function btnClick(event) {
   }*/
 }
 function generateCityDom(dtoCurrentWeatherObject){
-  let appDiv=document.getElementById('generateData');
-  appDiv.innerHTML='';
+  let appDiv = document.getElementById('generateData');
+  appDiv.innerHTML = ''; // Mevcut içeriği temizle
+
   let dataTempDiv = document.createElement("div");
       dataTempDiv.innerText= dtoCurrentWeatherObject.temp+ " derece";
   appDiv.appendChild(dataTempDiv);
@@ -144,28 +154,50 @@ function generateCityDom(dtoCurrentWeatherObject){
 appDiv.appendChild(dataImg_TextDiv);
 
 
+
+
 }
 
 async function btnClickFavoryCity(event) {
   let domFavoriteCity = document.getElementById("txtCity");
-  var cityName = document.getElementById("txtCity").value;
-  console.log("Adding city to favorites:", cityName);
-  if (cityName !== "") {
-    util.cookie.setCookie('favoriteCity',cityName);
+  let cityName = domFavoriteCity.value;
+  let favoriteCitiesList = document.getElementById('favoriteCitiesList');
 
-    // Clear the input field
+  console.log("Adding city to favorites:", cityName);
+
+  if (cityName !== "") {
+    util.cookie.deleteCookie('favoriteCity', cityName);
+
+    // Yeni bir div öğesi oluşturun
+    let newCityElement = document.createElement("div");
+    newCityElement.textContent = cityName;
+
+    // Oluşturulan div'i favori şehirler listesine ekleyin
+    favoriteCitiesList.appendChild(newCityElement);
+
+    // Çerez ayarı
+    util.cookie.setCookie('favoriteCity', cityName);
+    
+    
+
+    // Giriş alanını temizle
     domFavoriteCity.value = "";
   } else {
     alert("Please enter a valid city name.");
   }
 }
 
+
 function generateCityFutureWeatherDom(dtoFutureWeatherObject) {
+  
   if (dtoFutureWeatherObject) {
-    let app_div = document.getElementById("app");
+    let app_div = document.getElementById("FutureData");
+    app_div.innerHTML = ''; 
+
     let tmp_Header_div = document.createElement("h3");
       tmp_Header_div.innerText="Gelecek Hava Tahmini";
       app_div.appendChild(tmp_Header_div);
+    
 
     for (let i = 0; i < dtoFutureWeatherObject.length; i++) {
       const item = dtoFutureWeatherObject[i];
@@ -179,6 +211,7 @@ function generateCityFutureWeatherDom(dtoFutureWeatherObject) {
     }
     
   }
+
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -190,7 +223,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Pass the result to generateCityFutureWeatherDom
 
 
-    //let myfavoriteCity = util.cookie.getCookie('favoriteCity');
+    myfavoriteCity = util.cookie.deleteCookie('favoriteCity');
     //let json_weather_data = await weather_api.getFutureWeather(myfavoriteCity, 5);
     // let json_weather_data = await weather_api.dtoFunction.getFutureWeather(myfavoriteCity, forecastLength);
     // generateCityFutureWeatherDom(json_weather_data)
